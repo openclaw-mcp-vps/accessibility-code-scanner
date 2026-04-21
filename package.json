@@ -1,24 +1,44 @@
 {
   "name": "accessibility-code-scanner",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "lint": "next lint"
   },
   "dependencies": {
-    "next": "15",
-    "react": "18",
-    "react-dom": "18"
+    "@babel/parser": "^7.28.0",
+    "@babel/traverse": "^7.28.0",
+    "@lemonsqueezy/lemonsqueezy.js": "^4.0.0",
+    "@radix-ui/react-slot": "^1.2.3",
+    "acorn": "^8.15.0",
+    "acorn-jsx": "^5.3.2",
+    "cheerio": "^1.1.2",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "jszip": "^3.10.1",
+    "lucide-react": "^0.511.0",
+    "multer": "^2.0.2",
+    "next": "^15.0.0",
+    "next-auth": "^5.0.0-beta.30",
+    "octokit": "^4.1.2",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tailwind-merge": "^3.3.0",
+    "zod": "^3.25.67",
+    "@babel/types": "^7.28.0"
   },
   "devDependencies": {
-    "typescript": "^5",
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "tailwindcss": "^3",
-    "postcss": "^8",
-    "autoprefixer": "^10"
+    "@tailwindcss/postcss": "^4.1.8",
+    "@types/babel__traverse": "^7.28.0",
+    "@types/jszip": "^3.4.1",
+    "@types/multer": "^2.0.0",
+    "@types/node": "^22.14.1",
+    "@types/react": "^19.1.5",
+    "@types/react-dom": "^19.1.5",
+    "typescript": "^5.8.3",
+    "tailwindcss": "^4.1.8"
   }
 }

@@ -1,97 +1,178 @@
-export default function Page() {
-  const checks = [
-    "Missing alt text in docs & README images",
-    "Cryptic variable & function names",
-    "Insufficient inline code comments",
-    "Unlabeled form fields in UI code",
-    "Screen-reader-hostile HTML patterns",
-    "GitHub repo deep-scan support",
-  ];
+import Link from "next/link";
+import { ArrowRight, CheckCircle2, ShieldCheck, Zap } from "lucide-react";
 
-  const faqs = [
-    {
-      q: "What types of files can I scan?",
-      a: "Upload any source file (.js, .ts, .py, .html, .md, etc.) or paste a public GitHub repository URL. We analyze code structure, documentation, and markup for blind-developer accessibility gaps.",
-    },
-    {
-      q: "How is this different from standard accessibility checkers?",
-      a: "Most tools focus on end-user UI. AccessScan targets the developer experience — variable naming clarity, comment density, and documentation quality that blind developers rely on when reading code with a screen reader.",
-    },
-    {
-      q: "Can I integrate this into my CI/CD pipeline?",
-      a: "Yes. Subscribers get an API key and a GitHub Action you can drop into any workflow to block merges that introduce accessibility regressions.",
-    },
-  ];
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
+const faqItems = [
+  {
+    question: "What does the scanner detect?",
+    answer:
+      "It analyzes HTML/JSX/TSX source for accessibility failures that impact blind developers: missing alt text, unlabeled form controls, keyboard-inaccessible interactions, focus traps, and invalid ARIA patterns."
+  },
+  {
+    question: "Will this replace manual accessibility testing?",
+    answer:
+      "No. It is designed as a fast pre-deployment guardrail. You still need manual audits and user testing, but this catches costly regressions before they reach QA or production."
+  },
+  {
+    question: "Who is this built for?",
+    answer:
+      "Engineering managers and senior developers at startup teams shipping internal tools, IDE extensions, and web apps where accessibility quality is a product requirement."
+  },
+  {
+    question: "How does access work after payment?",
+    answer:
+      "Checkout uses Stripe hosted payments. After purchase, verify your checkout email once in the dashboard to set your access cookie and unlock the scanner."
+  }
+];
+
+export default function HomePage() {
   return (
-    <main className="max-w-3xl mx-auto px-6 py-16 space-y-20">
-      {/* Hero */}
-      <section className="text-center space-y-6">
-        <span className="inline-block bg-[#161b22] border border-[#30363d] text-[#58a6ff] text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-widest">
-          Accessibility Tools
-        </span>
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-white leading-tight">
-          Code accessibility,{" "}
-          <span className="text-[#58a6ff]">built for blind developers</span>
-        </h1>
-        <p className="text-lg text-[#8b949e] max-w-xl mx-auto">
-          Upload a file or point to a GitHub repo. AccessScan flags every place your code makes life harder for developers who rely on screen readers — and tells you exactly how to fix it.
-        </p>
-        <a
-          href={process.env.NEXT_PUBLIC_LS_CHECKOUT_URL || "#"}
-          className="inline-block bg-[#58a6ff] hover:bg-[#79b8ff] text-[#0d1117] font-bold px-8 py-3 rounded-lg transition-colors text-base"
-        >
-          Start scanning — $15/mo
-        </a>
-        <ul className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-3 text-left">
-          {checks.map((c) => (
-            <li key={c} className="flex items-start gap-2 bg-[#161b22] border border-[#30363d] rounded-lg px-4 py-3 text-sm text-[#c9d1d9]">
-              <span className="text-[#58a6ff] font-bold mt-0.5">✓</span>
-              {c}
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Pricing */}
-      <section className="flex justify-center">
-        <div className="w-full max-w-sm bg-[#161b22] border border-[#58a6ff] rounded-2xl p-8 space-y-6 text-center shadow-lg shadow-[#58a6ff]/10">
-          <p className="text-xs font-semibold text-[#58a6ff] uppercase tracking-widest">Pro Plan</p>
-          <div>
-            <span className="text-5xl font-extrabold text-white">$15</span>
-            <span className="text-[#8b949e] ml-1">/month</span>
+    <main className="mx-auto max-w-6xl px-4 pb-20 pt-10 sm:px-6 lg:px-8">
+      <header className="rounded-2xl border border-[#30363d] bg-[#11161d]/80 p-6 backdrop-blur-sm sm:p-10">
+        <div className="max-w-3xl space-y-6">
+          <p className="inline-flex items-center gap-2 rounded-full border border-[#1f6feb] bg-[#111d2f] px-3 py-1 text-xs font-medium text-[#79c0ff]">
+            <ShieldCheck className="h-3.5 w-3.5" />
+            Accessibility QA For Engineering Teams
+          </p>
+          <h1 className="text-3xl font-bold tracking-tight text-[#f0f6fc] sm:text-5xl">
+            Scan code for blind developer accessibility issues before deployment
+          </h1>
+          <p className="text-base leading-relaxed text-[#8b949e] sm:text-lg">
+            Accessibility Code Scanner finds the accessibility bugs that make software unusable for blind developers.
+            Detect ARIA violations, keyboard navigation failures, and screen reader blockers in minutes across your
+            codebase or GitHub repository.
+          </p>
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <Button asChild size="lg">
+              <a href={process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK} rel="noreferrer" target="_blank">
+                Buy Now - $15/mo
+              </a>
+            </Button>
+            <Button asChild size="lg" variant="outline">
+              <Link href="/dashboard">
+                Go to Dashboard
+                <ArrowRight className="h-4 w-4" />
+              </Link>
+            </Button>
           </div>
-          <ul className="space-y-2 text-sm text-[#c9d1d9] text-left">
-            {["Unlimited file & repo scans", "Detailed per-issue reports", "CI/CD GitHub Action", "API access", "Priority email support"].map((f) => (
-              <li key={f} className="flex items-center gap-2">
-                <span className="text-[#58a6ff]">✓</span>{f}
-              </li>
-            ))}
-          </ul>
-          <a
-            href={process.env.NEXT_PUBLIC_LS_CHECKOUT_URL || "#"}
-            className="block w-full bg-[#58a6ff] hover:bg-[#79b8ff] text-[#0d1117] font-bold py-3 rounded-lg transition-colors"
-          >
-            Get started
-          </a>
-          <p className="text-xs text-[#8b949e]">Cancel anytime. No contracts.</p>
+        </div>
+      </header>
+
+      <section className="mt-12 grid gap-4 md:grid-cols-3">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">The Problem</CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm text-[#8b949e]">
+            Most teams ship inaccessible interfaces because blind user workflows are rarely validated in CI and manual
+            audits are slow and expensive.
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">The Solution</CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm text-[#8b949e]">
+            Run targeted AST-based and markup-level rules to detect actionable accessibility regressions while code is
+            still in development.
+          </CardContent>
+        </Card>
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-lg">Why Teams Pay</CardTitle>
+          </CardHeader>
+          <CardContent className="text-sm text-[#8b949e]">
+            Save QA cycles, prevent costly accessibility fixes post-launch, and ship inclusive experiences without a
+            dedicated accessibility specialist.
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="mt-14 rounded-2xl border border-[#30363d] bg-[#11161d]/70 p-6 sm:p-10">
+        <h2 className="text-2xl font-semibold text-[#f0f6fc] sm:text-3xl">What You Get</h2>
+        <div className="mt-6 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-[#30363d] bg-[#0d1117] p-5">
+            <p className="flex items-center gap-2 text-sm font-semibold text-[#f0f6fc]">
+              <Zap className="h-4 w-4 text-[#58a6ff]" />
+              Fast repository scanning
+            </p>
+            <p className="mt-2 text-sm text-[#8b949e]">
+              Upload ZIP archives or connect GitHub repositories to scan up to 160 source files in a single run.
+            </p>
+          </div>
+          <div className="rounded-xl border border-[#30363d] bg-[#0d1117] p-5">
+            <p className="flex items-center gap-2 text-sm font-semibold text-[#f0f6fc]">
+              <CheckCircle2 className="h-4 w-4 text-[#3fb950]" />
+              Actionable issue reports
+            </p>
+            <p className="mt-2 text-sm text-[#8b949e]">
+              Every finding includes severity, rule ID, affected file path, optional line number, and remediation
+              guidance linked to WCAG/ARIA references.
+            </p>
+          </div>
+          <div className="rounded-xl border border-[#30363d] bg-[#0d1117] p-5">
+            <p className="flex items-center gap-2 text-sm font-semibold text-[#f0f6fc]">
+              <CheckCircle2 className="h-4 w-4 text-[#3fb950]" />
+              Coverage built for blind workflows
+            </p>
+            <p className="mt-2 text-sm text-[#8b949e]">
+              Rules emphasize keyboard behavior, semantic structure, and screen reader compatibility rather than generic
+              style-only lint checks.
+            </p>
+          </div>
+          <div className="rounded-xl border border-[#30363d] bg-[#0d1117] p-5">
+            <p className="flex items-center gap-2 text-sm font-semibold text-[#f0f6fc]">
+              <CheckCircle2 className="h-4 w-4 text-[#3fb950]" />
+              Paywalled production tool
+            </p>
+            <p className="mt-2 text-sm text-[#8b949e]">
+              The scanner is gated behind Stripe checkout and a verified access cookie to keep usage tied to paid
+              accounts.
+            </p>
+          </div>
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="space-y-4">
-        <h2 className="text-2xl font-bold text-white text-center">Frequently asked questions</h2>
-        <div className="space-y-3">
-          {faqs.map(({ q, a }) => (
-            <details key={q} className="bg-[#161b22] border border-[#30363d] rounded-lg px-5 py-4 group">
-              <summary className="cursor-pointer font-semibold text-[#c9d1d9] list-none flex justify-between items-center">
-                {q}
-                <span className="text-[#58a6ff] text-lg">+</span>
-              </summary>
-              <p className="mt-3 text-sm text-[#8b949e] leading-relaxed">{a}</p>
-            </details>
-          ))}
-        </div>
+      <section className="mt-14 grid gap-6 lg:grid-cols-[2fr_1fr]">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-2xl">Pricing</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4 text-sm text-[#8b949e]">
+            <p>Single plan optimized for mid-stage startup teams that need practical accessibility enforcement.</p>
+            <div className="rounded-xl border border-[#238636] bg-[#0f2d18] p-5">
+              <p className="text-xs uppercase tracking-wide text-[#7ee787]">Accessibility Tools Plan</p>
+              <p className="mt-1 text-3xl font-bold text-[#f0f6fc]">$15/month</p>
+              <ul className="mt-4 space-y-2">
+                <li>Repository and ZIP upload scans</li>
+                <li>Detailed issue reporting with remediation</li>
+                <li>Dashboard scan history</li>
+                <li>Cookie-based paid access control</li>
+              </ul>
+              <Button asChild className="mt-5 w-full sm:w-auto">
+                <a href={process.env.NEXT_PUBLIC_STRIPE_PAYMENT_LINK} rel="noreferrer" target="_blank">
+                  Start Subscription
+                </a>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card>
+          <CardHeader>
+            <CardTitle>FAQ</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {faqItems.map((item) => (
+              <div key={item.question}>
+                <h3 className="text-sm font-semibold text-[#f0f6fc]">{item.question}</h3>
+                <p className="mt-1 text-sm text-[#8b949e]">{item.answer}</p>
+              </div>
+            ))}
+          </CardContent>
+        </Card>
       </section>
     </main>
   );
